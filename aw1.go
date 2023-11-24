@@ -11,9 +11,7 @@ type node struct {
 	children  map[rune]*node
 }
 
-type nodePool struct {
-	pool map[rune]*node
-}
+type nodePool map[rune]*node
 
 func main() {
 
@@ -31,9 +29,7 @@ func main() {
 		words = append(words, []rune(word))
 	}
 
-	pool := &nodePool{
-		pool: make(map[rune]*node),
-	}
+	pool := nodePool(make(map[rune]*node))
 
 	root := pool.characterNode(words[0][0])
 
@@ -75,7 +71,6 @@ func main() {
 	}
 
 	if graphViz {
-		fmt.Printf("/* %d characters in language */\n", len(pool.pool))
 		fmt.Println("digraph g {")
 		fmt.Println("rankdir=\"LR\";")
 		root.graphOut()
@@ -83,7 +78,7 @@ func main() {
 		return
 	}
 
-	fmt.Printf("%d characters in language\n", len(pool.pool))
+	fmt.Printf("%d characters in language\n", len(pool))
 	fmt.Printf("first character %c\n", root.character)
 	root.printChildren()
 	/*
@@ -149,11 +144,11 @@ func (n *node) graphOut() {
 	}
 }
 
-func (p *nodePool) characterNode(character rune) *node {
-	if n, ok := p.pool[character]; ok {
+func (p nodePool) characterNode(character rune) *node {
+	if n, ok := p[character]; ok {
 		return n
 	}
 	n := NewNode(character)
-	p.pool[character] = n
+	p[character] = n
 	return n
 }
