@@ -19,12 +19,14 @@ The only way I can see to do this is to compare characters in adjacent pairs of 
 So compare characters in word 0 and word 1, characters in words 1 and 2, 2 and 3, etc.
 
 If the first character of an adjacent pair of words is different,
-`word[n][0]`  is lexically less than `word[n+m][0]`
-Note that `n` is numerically less than `m`.
+unknown language letter `word[n][0]`  is lexically less than
+unknown language letter `word[n+m][0]`.
+Note that index `n` is numerically less than `n+m`.
 The initial letters of the sorted list of words have a "less than" relationship,
 but there could be gaps.
 Perhaps the unknown language only has words with some letters in the initial position.
 
+You can derive some extra information in some instances from the rest of the letters.
 If the first character of an adjacent pair of words is identical,
 compare the second characters.
 If the second characters differ, the first word's second character
@@ -33,14 +35,14 @@ if  the second characters are identical, compare third characters,
 and so on.
 
 You get one lexically less than relationship of characters
-between any pair of adjacent words.
-You can't assume an immediate, parent-child relationship.
+between any pair of adjacent words,
+but you can't assume an immediate, parent-child relationship.
 
 You might also get letters where you can't determine a lexical less than relationship.
 Consider a sorted list of words `['ab', 'ac', 'bae', 'bc']`.
-You can tell that 'a' < 'b' when comparing "ac" and "bce",
-but "bce" has an 'e' character that can't be compared to anything.
-"bce" is the longest word in the sorted list.
+You can tell that 'a' < 'b' when comparing "ac" and "bce".
+The word "bce" has an 'e' character that can't be compared to anything,
+since "bce" is the longest word in the sorted list and 'e' only occurs there.
 
 Unless the sorted word list is chosen carefully,
 you will at best get a [topological sort](https://www.johndcook.com/blog/2023/03/27/topological-sort/)
@@ -238,3 +240,12 @@ candidate's head, requiring refactoring and changing code and data structures.
 That's difficult on a whiteboard after even a small number of lines of code.
 My code clocks in at just less than 200 lines,
 which is certainly too big for a whiteboard.
+
+One big flaw exists in this problem.
+A topological sort can produce a straight line list
+of letters that have a lexically less than relationship.
+That sort may not represent  the sorting order of the unknown language,
+if the list of words doesn't have enough information about the letters.
+A candidate that considers the use of an ordering of letters may decide
+that a topological sort would just mislead users trying to understand
+the unknown language.
