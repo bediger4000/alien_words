@@ -49,9 +49,11 @@ of the letters in the unknown language.
 ### Data Structures
 
 The data structure to keep the characters in will need to allow arbitrary insertions,
-but not deletions.
-The trick here is that even when a pair of characters have a lexical relationship,
-we don't know if characters will show up that are lexically between them.
+and deletions.
+The trick here is that even when a pair of characters have a lexical relationship
+based on one pair of adjacent words,
+we don't know if characters will show up that are lexically between them
+in pairs of words encountered later.
 We also have to pick a data structure that allows a "less than" character to have
 multiple characters "greater than".
 
@@ -102,10 +104,21 @@ type node struct {
 }
 ```
 
+I don't know if you could keep a Go slice of `rune` to track the lexically less than
+relationships among all characters discovered so far.
+Even a sorted word input list that ends up with a single chain of letters
+has input states where less than relationships between letters is indeterminate.
+Maybe that trick used in [heap](https://en.wikipedia.org/wiki/Binary_heap)
+algorithm binary trees,
+where knowing the index of a node lets you calculate child and parent nodes.
+I think pointers are less confusing in the current situation.
+
 I keep a root node, the letter determined to be lexically least so far.
 I wrongly believed that would be the first letter of the first word of the list.
 That's not true, a word list of `['ba', 'bb', 'bc']` has a first letter
 of first word that's not the first lexically sorted letter.
+I suppose it would be possible to put a `root bool` element in the `node` struct,
+so as to mark the root node, but that seems error-prone.
 
 In addition, I have a `map[rune]*node` to track all of the characters discovered.
 Due to Go's method system, I added a method through which all
