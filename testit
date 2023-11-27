@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eou pipefail
+# Change the numerical argument to reservoir to try more or less words
+reservoir 25 < /usr/share/dict/words |
+	tr -cs 'A-Za-z' '\n' |
+	tr '[A-Z]' '[a-z]' |
+	sort > test.out
+   	./alien_words -g test.out > g.dot
+dot -Tpng -o g.png g.dot
+feh g.png
