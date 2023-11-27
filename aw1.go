@@ -60,6 +60,13 @@ func main() {
 		w0 := words[n]
 		w1 := words[n+1]
 
+		for _, letter := range w0 {
+			pool.characterNode(letter)
+		}
+		for _, letter := range w1 {
+			pool.characterNode(letter)
+		}
+
 		ln := len(w0)
 		if len(w1) < ln {
 			ln = len(w1)
@@ -99,6 +106,11 @@ func main() {
 		fmt.Println("digraph g {")
 		fmt.Println("rankdir=\"LR\";")
 		root.graphOut()
+		for _, n := range pool {
+			if n.parent == nil && n != root {
+				fmt.Printf("%c;\n", n.character)
+			}
+		}
 		fmt.Println("}")
 		return
 	}
@@ -116,15 +128,14 @@ func main() {
 }
 
 func (n *node) addChild(c *node) {
-	if n == nil {
-		return
-	}
 	c.parent = n
 	n.children[c.character] = c
 }
 
 func (n *node) removeChild(character rune) {
 	if n == nil {
+		// n.parent is nil for the root node, put the check here
+		// so that algorithm is clearer
 		return
 	}
 	if c := n.children[character]; c != nil {
