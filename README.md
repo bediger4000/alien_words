@@ -16,7 +16,7 @@ you should return `['x', 'z', 'w', 'y']`.
 ## Analysis
 
 The only way I can see to do this is to compare characters in adjacent pairs of words.
-So compare characters in word 0 and word 1, charactesrs in words 1 and 2, 2 and 3, etc.
+So compare characters in word 0 and word 1, characters in words 1 and 2, 2 and 3, etc.
 
 If the first character of an adjacent pair of words is different,
 `word[n][0]`  is lexically less than `word[n+m][0]`
@@ -27,7 +27,7 @@ Perhaps the unknown language only has words with some letters in the initial pos
 
 If the first character of an adjacent pair of words is identical,
 compare the second characters.
-If the second characteres differ, the first word's second character
+If the second characters differ, the first word's second character
 is lexically less than the second word's second character.
 if  the second characters are identical, compare third characters,
 and so on.
@@ -166,7 +166,7 @@ $ dot -Tpng -o in2.png in2.dot
 
 ![topological sort of letter order](in2.png)
 
-That's an example of using 25 english language words,
+That's an example of using 25 English language words,
 chosen randomly from `/usr/share/dict/words`, file [in2](in2).
 
 My program can't find any lexical less than relationship for 'i', 'z', 'x', 'k'.
@@ -191,9 +191,11 @@ Nowhere can we find where 'c' relates to 'a' or 'b'.
 ![two chains of lexical less than relationships](in3.png)
 
 The bash script [testit](testit) shows how to try different sized sorted lists
-of english words.
+of English words.
 It does use an executable [reservoir](https://github.com/bediger4000/reservoir-sampling)
 to choose N words randomly from a file.
+I find that even with 500 randomly chosen English words,
+the program still can't always find where 'x', 'y' and 'z' sort.
 
 ## Interview Analysis
 
