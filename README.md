@@ -169,6 +169,27 @@ $ dot -Tpng -o in2.png in2.dot
 That's an example of using 25 english language words,
 chosen randomly from `/usr/share/dict/words`, file [in2](in2).
 
+My program can't find any lexical less than relationship for 'i', 'z', 'x', 'k'.
+'k' appears once in the file, at the end of "brock".
+"bracero" sorts before "brock" in the list, and allows the program to deduce
+that 'a' < 'o', but nothing else.
+'z' appears in "bureaucratize" and "nasalizing", but again,
+too far to the right in those words to allow a placement.
+There's reasons for all these letters to appear without a parent.
+
+It's also possible to create sorted lists of words that don't have a single
+chain of lexical less than relationships.
+Consider the list
+`['abd', 'abe', 'bc', 'bd', 'be']`.
+
+* a < b, based on "abe" sorting before "bc".
+* d < e, based on "abd" sorting before "abe".
+* c < d, d < e, based on "bc", "bd" and "be"
+
+Nowhere can we find where 'c' relates to 'a' or 'b'.
+
+![two chains of lexical less than relationships](in3.png)
+
 The bash script [testit](testit) shows how to try different sized sorted lists
 of english words.
 It does use an executable [reservoir](https://github.com/bediger4000/reservoir-sampling)
@@ -192,7 +213,13 @@ and possibly by doing some small amount of object oriented coding.
 Moving some code to methods can add clarity to the algorithm,
 which is a little unusual in small problems like this.
 
-My code clocks in at 189 lines, which is large for a whiteboard interview.
+The interviewer could also pose alternate word lists to get
+candidates to consider corner cases.
+This would allow an interviewer to see how a candidate refactors,
+if the corner cases trigger bugs or break the algorithm.
+
+My code clocks in at just less than 200 lines,
+which is large for a whiteboard interview.
 I think any algorithm solving this problem would be hard to contain in a
 candidate's head, so refactoring and changing and evolving the code would
 be necessary, and that's difficult on a whiteboard.
