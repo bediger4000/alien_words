@@ -205,8 +205,8 @@ albeit not one that's good for whiteboard coding.
 It requires the candidate to think about the problem,
 and devise a solution.
 The solution has some subtleties,
-so the candidate will probably have to evolve the data structure,
-and change the algorithm.
+so the candidate will probably have to modify the data structure,
+and change the algorithm as coding progresses and information presents itself.
 
 The interviewer would get to see some non-trivial code.
 There's opportunities for the candidate to make the code more or less clear
@@ -220,8 +220,8 @@ candidates to consider corner cases.
 This would allow an interviewer to see how a candidate refactors,
 if the corner cases trigger bugs or break the algorithm.
 
-My code clocks in at just less than 200 lines,
-which is large for a whiteboard interview.
 I think any algorithm solving this problem would be hard to contain in a
-candidate's head, so refactoring and changing and evolving the code would
-be necessary, and that's difficult on a whiteboard.
+candidate's head, requiring refactoring and changing code and data structures.
+That's difficult on a whiteboard after even a small number of lines of code.
+My code clocks in at just less than 200 lines,
+which is certainly too big for a whiteboard.
