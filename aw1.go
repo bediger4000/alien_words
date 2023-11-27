@@ -108,7 +108,7 @@ func main() {
 		root.graphOut()
 		for _, n := range pool {
 			if n.parent == nil && n != root {
-				fmt.Printf("%c;\n", n.character)
+				n.graphOut()
 			}
 		}
 		fmt.Println("}")
@@ -167,6 +167,7 @@ func (n *node) printChildren() {
 }
 
 func (n *node) graphOut() {
+	fmt.Printf("%c;\n", n.character)
 	for _, c := range n.children {
 		fmt.Printf("%c -> %c;\n", n.character, c.character)
 	}
