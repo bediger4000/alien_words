@@ -15,13 +15,12 @@ you should return `['x', 'z', 'w', 'y']`.
 
 ## Analysis
 
-The only way I can see to do this is to compare characters in adjacent pairs of words.
-So compare characters in word 0 and word 1, characters in words 1 and 2, 2 and 3, etc.
+The only way I can see to do this is to compare characters in adjacent pairs of words
+to determine lexical "less than" relationships.
 
 If the first character of an adjacent pair of words is different,
 unknown language letter `word[n][0]`  is lexically less than
-unknown language letter `word[n+m][0]`.
-Note that index `n` is numerically less than `n+m`.
+unknown language letter `word[n+1][0]`.
 The initial letters of the sorted list of words have a "less than" relationship,
 but there could be gaps.
 Perhaps the unknown language only has words with some letters in the initial position.
@@ -34,7 +33,7 @@ is lexically less than the second word's second character.
 if  the second characters are identical, compare third characters,
 and so on.
 
-You get one lexically less than relationship of characters
+You get at most one lexically less than relationship of characters
 between any pair of adjacent words,
 but you can't assume an immediate, parent-child relationship.
 
@@ -45,12 +44,11 @@ The word "bce" has an 'e' character that can't be compared to anything,
 since "bce" is the longest word in the sorted list and 'e' only occurs there.
 
 Unless the sorted word list is chosen carefully,
-you will at best get a [topological sort](https://www.johndcook.com/blog/2023/03/27/topological-sort/)
-of the letters in the unknown language.
+you can get letter(s) that are impossible to place in the sorting order.
 
 ### Data Structures
 
-The data structure to keep the characters in will need to allow arbitrary insertions,
+The data structure used to track the characters will need to allow arbitrary insertions,
 and deletions.
 The trick here is that even when a pair of characters have a lexical relationship
 based on one pair of adjacent words,
@@ -120,7 +118,9 @@ I wrongly believed that would be the first letter of the first word of the list.
 That's not true, a word list of `['ba', 'bb', 'bc']` has a first letter
 of first word that's not the first lexically sorted letter.
 I suppose it would be possible to put a `root bool` element in the `node` struct,
-so as to mark the root node, but that seems error-prone.
+so as to mark the root node,
+or use a nil `parent` pointer as such a mark,
+but that seems error-prone.
 
 In addition, I have a `map[rune]*node` to track all of the characters discovered.
 Due to Go's method system, I added a method through which all
